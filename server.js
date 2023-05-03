@@ -1,27 +1,13 @@
 const express = require("express");
 const app = express();
-const port = 8080;
-const mysql2 = require("mysql2");
 const bcrypt = require("bcrypt");
-require('dotenv').config()
+const connection = require('./database')
+require("dotenv").config();
 
 const saltRounds = 10;
-
+const port = process.env.PORT_SERVER;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const connection = mysql2.createConnection({
-  host: process.env.HOST,
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
-  port: process.env.PORT,
-});
-if (!connection) {
-  console.log("Not Connecting");
-} else {
-  console.log("Connecting");
-}
 
 app.get("/ping", (req, res) => {
   res.send("pong");
